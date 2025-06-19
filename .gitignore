@@ -89,5 +89,4 @@ crashlytics-build.properties
 
 # Large files to be manually ignored
 Assets/Models/Soldier/Ch10_nonPBR.fbx
-Assets/Models/Dungeon/Sample Scene/SampleScene/LightingData.asset
 Assets/Scenes/Game/LightingData.asset
