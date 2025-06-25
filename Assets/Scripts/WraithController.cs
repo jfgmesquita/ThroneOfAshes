@@ -26,13 +26,14 @@ public class AshWraithController : MonoBehaviour
     NavMeshAgent agent;
     Transform player;
     AudioSource audioSource;
-    Renderer rend;
+    readonly Renderer rend;
     float lastAttackTime;
     int currentPatrol = 0;
     enum State { Idle, Patrol, Chase, Attack, Retreat }
     State state = State.Patrol;
     State previousState = State.Patrol;
     Animator animator;
+    private bool isDead = false;
 
     void Awake()
     {
@@ -40,7 +41,6 @@ public class AshWraithController : MonoBehaviour
         player = GameObject.FindWithTag("Player").transform;
         audioSource = GetComponent<AudioSource>();
         animator = GetComponentInChildren<Animator>();
-        rend = GetComponentInChildren<Renderer>();
     }
 
     void Start()
@@ -55,6 +55,8 @@ public class AshWraithController : MonoBehaviour
 
     void Update()
     {
+        if (isDead) return;
+
         float dist = Vector3.Distance(transform.position, player.position);
 
         // Retreat if too close
@@ -173,6 +175,8 @@ public class AshWraithController : MonoBehaviour
 
     public void TakeDamage(int amt)
     {
+        if (isDead) return;
+
         health -= amt;
         healthbar.UpdateHealthBar(maxHealth, health);
 
@@ -191,11 +195,33 @@ public class AshWraithController : MonoBehaviour
 
     void Die()
     {
+        if (isDead) return;
+        isDead = true;
+
         if (runePrefab != null)
         {
             Instantiate(runePrefab, transform.position + Vector3.up * 0.05f, Quaternion.Euler(90f, 90f, 0f));
         }
         FindFirstObjectByType<PlayerUI>().AddLiberatedSoul();
-        Destroy(gameObject);
+
+        // Trigger death animation
+        if (animator != null)
+            animator.SetTrigger("Die");
+
+        // Disable NavMeshAgent
+        if (agent != null)
+        {
+            agent.enabled = false;
+        }
+        // Disable Collider
+        if (TryGetComponent<Collider>(out var col))
+        {
+            col.enabled = false;
+        }
+
+        if (healthbar != null)
+        {
+            healthbar.Hide();
+        }
     }
 }

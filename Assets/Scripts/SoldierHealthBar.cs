@@ -25,4 +25,9 @@ public class SoldierHealthBar : MonoBehaviour
     {
         target = currentHealth / maxHealth;
     }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
+    }
 }

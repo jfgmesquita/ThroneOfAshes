@@ -137,7 +137,7 @@ public class PlayerUI : MonoBehaviour
 
     void OnGUI()
     {
-        // VINHETA
+        // Vignette
         float intoxThreshold = maxIntoxication * 0.7f;
         float intoxPercent = Mathf.Clamp01(intoxication / intoxThreshold);
 

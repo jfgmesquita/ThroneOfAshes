@@ -18,20 +18,14 @@ public class SoldierController : MonoBehaviour
     float lastAttackTime;
     enum State { Patrol, Chase, Attack }
     State state = State.Patrol;
-    private Renderer enemyRenderer;
-    private Color originalColor;
-    public Color flashColor = Color.red;
-    public float flashDuration = 0.1f;
     public GameObject runePrefab;
     private Animator animator;
+    private bool isDead = false;
 
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindWithTag("Player").transform;
-        enemyRenderer = GetComponentInChildren<Renderer>();
-        originalColor = enemyRenderer.material.color;
-        flashColor = Color.red;
         animator = GetComponentInChildren<Animator>();
     }
 
@@ -47,6 +41,8 @@ public class SoldierController : MonoBehaviour
 
     void Update()
     {
+        if (isDead) return;
+
         float distToPlayer = Vector3.Distance(transform.position, player.position);
 
         // State transitions
@@ -126,13 +122,17 @@ public class SoldierController : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
+        if (isDead) return;
+
         health -= amount;
         animator.SetTrigger("Hit");
         StartCoroutine(HitReaction());
         healthbar.UpdateHealthBar(maxHealth, health);
 
         if (health <= 0)
+        {
             Die();
+        }
     }
 
     IEnumerator HitReaction()
@@ -144,11 +144,34 @@ public class SoldierController : MonoBehaviour
 
     void Die()
     {
+        if (isDead) return;
+        isDead = true;
+
         if (runePrefab != null)
         {
             Instantiate(runePrefab, transform.position + Vector3.up * 0.05f, Quaternion.Euler(90f, 90f, 0f));
         }
         FindFirstObjectByType<PlayerUI>().AddLiberatedSoul();
-        Destroy(gameObject);
+
+        if (animator != null)
+        {
+            animator.SetTrigger("Die");
+        }
+
+        // Disable NavMeshAgent and Collider
+        if (agent != null)
+        {
+            agent.enabled = false;
+        }
+        // Disable Collider
+        if (TryGetComponent<Collider>(out var col))
+        {
+            col.enabled = false;
+        }
+
+        if (healthbar != null)
+        {
+            healthbar.Hide();
+        }
     }
 }
