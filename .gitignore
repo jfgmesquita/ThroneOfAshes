@@ -1,6 +1,7 @@
-# This .gitignore file should be placed at the root of your Unity project directory
-#
-# Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
+# Large files to be manually ignored
+Assets/Models/Soldier/Ch10_nonPBR.fbx
+Assets/Scenes/Game/LightingData.asset
+
 #
 .utmp/
 /[Ll]ibrary/
@@ -86,7 +87,3 @@ crashlytics-build.properties
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Flow/UnitOptions.db.meta
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers
 /[Aa]ssets/Unity.VisualScripting.Generated/VisualScripting.Core/Property Providers.meta
-
-# Large files to be manually ignored
-Assets/Models/Soldier/Ch10_nonPBR.fbx
-Assets/Scenes/Game/LightingData.asset
