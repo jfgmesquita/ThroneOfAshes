@@ -4,7 +4,7 @@
 
 *Throne of Ashes* is a dark fantasy action RPG where you play as the **Ashen Knight**, venturing through a dungeon haunted by ash and time. Armed with a sword, fire magic, and a grappling hook to drag enemies into melee range, you must eliminate all corrupted foes and release their souls before the ashes consume you.
 
-> 🔗 [Watch the gameplay](https://www.youtube.com/watch?v=Wtbu2UNAW8M)
+> 🔗 [Watch the gameplay on YouTube](https://www.youtube.com/watch?v=Wtbu2UNAW8M)
 
 ---
 
