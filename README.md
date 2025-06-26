@@ -61,7 +61,7 @@ The project demonstrates a full gameplay loop and applies core game development 
 
 **João Mesquita**  
 Computer Engineering Student  
-[GitHub Profile](https://github.com/jfgmesquita)
+[Personal Website](https://joaomesquita.pt/)  [GitHub Profile](https://github.com/jfgmesquita) 
 
 ---
 
